@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Projektas ({{ project.name }}){% endblock %}
+
+{% block content %}
+{% load static %}
+{% if project.image %}
+<img src="{{ project.image.url }}" style="width:300px" class="card-img-top" alt="...">
+{% else %}
+<img src="{% static 'img/default.png' %}" style="width:300px" class="card-img-top">
+{% endif %}
+<h1>Projektas:</h1>
+<p>Pavadinimas: <strong> {{ project.name }} </strong></p>
+<p>Pradžios data: <strong> {{ project.date_start }} </strong></p>
+<p>Pabaigos data:: <strong> {{ project.date_end }} </strong></p>
+<p>Užsakovas: <strong> {{ project.client }} </strong></p>
+<p>Atsakingas asmuo: <strong> {{ project.in_charge }}</strong> </p>
+<p>Darbuotojai: </p>
+<ul>
+    {% for employee in project.employees.all %}
+        <li> <strong> {{ employee }} </strong> </li>
+    {% endfor %}
+</ul>
+<p>Atliekami darbai: </p>
+<ul>
+    {% for task in project.tasks.all %}
+        <li> <strong> {{ task.task_name }} </strong> <p> Statusas: <strong> {{ task.get_status_display }} </strong> </p> </li>
+    {% endfor %}
+</ul>
+<p>Sąskaitos: </p>
+<ul>
+    {% for bill in project.bills.all %}
+        <li> Suma: <strong> {{ bill.bill_sum }} </strong> <p> Statusas: <strong> {{ bill.get_status_display }} </strong> </p> </li>
+    {% endfor %}
+</ul>
+{% if project.description %}
+<p>Aprašymas: {{ project.description | safe }} </p>
+{% endif %}
+{% endblock %}

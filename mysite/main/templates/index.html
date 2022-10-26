@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Sveiki atvykę{% endblock %}
+
+{% block content %}
+{% comment %} {% load i18n %} {% endcomment %}
+  <h1>Sveiki atvykę į "PROJEKTUTA", populiariausią projektų valdymo tinklapį Lietuvoje!</h1>
+<ul>
+    <li><strong>Mūsų puslapyje valdomi projektai:</strong> {{ count_projects }}</li>
+    <li><strong>Bendras klientų skaičius:</strong> {{ count_clients }}</li>
+</ul>
+{% endblock content %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Projektai{% endblock %}
+
+{% block content %}
+{% load static %}
+<h1>Jums priskirti projektai:</h1>
+
+{% if projects %}
+    <div class="row">
+    {% for project in projects %}
+        <div class="col-md-4 d-flex align-items-stretch">
+            <div class="card mb-4 shadow-sm">
+                {% if project.image %}
+                <img src="{{ project.image.url }}" class="card-img-top" alt="...">
+                {% else %}
+                <img src="{% static 'img/default.png' %}" class="card-img-top">
+                {% endif %}
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">{{ project.client }}</h6>
+                    <p class="card-text"><a href="{% url 'projects' %}{{ project.pk }}">{{ project.name }}</a></p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+{% else %}
+<p>Jūs neturite priskirtų projektų :(</p>
+{% endif %}
+  <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; pirmas</a>
+            <a href="?page={{ page_obj.previous_page_number }}">atgal</a>
+        {% endif %}
+
+        <span class="current">
+            {{ page_obj.number }} iš {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">pirmyn</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">paskutinis &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+{% endblock %}
